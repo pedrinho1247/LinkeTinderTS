@@ -34,21 +34,27 @@ var listCa = document.getElementById('listagemCandidato');
 //Esconder botões
 window.onload = function () {
     btnCandidato.onclick = function () {
+        formEmpresa.style.display = 'none';
+        formCandidato.style.display = 'initial';
         btnEmpresa.style.display = 'none';
         btnCandidato.style.display = 'none';
         btnVgCandidato.style.display = 'none';
         btnVgEmpresa.style.display = 'none';
         listCa.style.display = 'none';
+        listEmp.style.display = 'none';
         FormsCandidato();
     };
     //Botão para mostrar formulário de cadastro de empresas
     btnEmpresa.onclick = function () {
+        formCandidato.style.display = 'none';
+        formEmpresa.style.display = 'initial';
         btnEmpresa.style.display = 'none';
         formCandidato.style.display = 'none';
         btnCandidato.style.display = 'none';
         btnVgCandidato.style.display = 'none';
         btnVgEmpresa.style.display = 'none';
         listCa.style.display = 'none';
+        listEmp.style.display = 'none';
         FormsEmpresa();
     };
 };
@@ -173,7 +179,6 @@ function CadastrarEmpresa() {
     descricaoInput.value = '';
     // Exibir botões novamente
     formEmpresa.style.display = 'none';
-    formCandidato.style.display = 'none';
     btnEmpresa.style.display = '';
     btnVgCandidato.style.display = '';
     btnVgEmpresa.style.display = '';
