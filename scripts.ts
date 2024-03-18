@@ -9,56 +9,70 @@ class Candidato{
         public estado: string,
         public cep: number,
         public descricao: string,
-        public competencias: string
+        public competencias: string[]
         )
         {}
     
     static listarCandidatos(listaCandidatos: Candidato[]): void {
         document.getElementById('listagemCandidato').innerHTML = '';
-        
+       
         var html = '';
-        
-        for(var i = 0; i < listaCandidatos.length; i++) { // Mudança aqui
+            
+        for(var j = 0; j < listaCandidatos.length; j++) {
+
+            const competencias = ListaCandidatos[j].competencias.map(competencia =>
+                `<li>${competencia}</li>`
+            ).join('');
+
             html += `
             <table class="mt-5 ms-5">
                 <tr>
                     <th><span> Nome: </span></th>
-                    <td><span>${listaCandidatos[i].nome}</span></td>
+                    <td><span>${'Candidato ' + [j + 1]}</span></td>
                 </tr>
-                <tr>
+                <tr style="display:none;">
+                    <th><span> Nome: </span></th>
+                    <td><span>${listaCandidatos[j].nome}</span></td>
+                </tr>
+                <tr style="display:none;">
                     <th><span> Email: </span></th>
-                    <td><span>${listaCandidatos[i].email}</span></td>
+                    <td><span>${listaCandidatos[j].email}</span></td>
                 </tr>
-                <tr>
+                <tr style="display:none;">
                     <th><span> CPF: </span></th>
-                    <td><span>${listaCandidatos[i].cpf}</span></td>
+                    <td><span>${listaCandidatos[j].cpf}</span></td>
                 </tr>
-                <tr>
+                <tr style="display:none;">
                     <th><span> Idade: </span></th>
-                    <td><span>${listaCandidatos[i].idade}</span></td>
+                    <td><span>${listaCandidatos[j].idade}</span></td>
                 </tr>
                 <tr>
                     <th><span> Estado: </span></th>
-                    <td><span>${listaCandidatos[i].estado}</span></td>
+                    <td><span>${listaCandidatos[j].estado}</span></td>
                 </tr>
                 <tr>
                     <th><span> CEP: </span></th>
-                    <td><span>${listaCandidatos[i].cep}</span></td>
+                    <td><span>${listaCandidatos[j].cep}</span></td>
                 </tr>
                 <tr>
                     <th><span> Descrição: </span></th>
-                    <td><span>${listaCandidatos[i].descricao}</span></td>
+                    <td><span>${listaCandidatos[j].descricao}</span></td>
                 </tr>
                 <tr>
                     <th><span> Competências: </span></th>
-                    <td><span>${listaCandidatos[i].competencias}</span></td>
-                </tr>                                
+                    <td>
+                    <ul>
+                        ${competencias}
+                    </ul>
+                    </td>
+                </tr>                         
             </table>
-                 `;
+                `;
         }
-        
+            
         document.getElementById('listagemCandidato').innerHTML += html;
     }
+        
 }
 
 //Botão
@@ -137,11 +151,19 @@ function FormsCandidato() {
         </div>\
         <div class="mb-3 col-sm-6">\
             <label class="form-label">Competências</label>\
-            <input type="text" class="form-control" id="competencias">\
+            <select id="competencias" class="form-select" multiple>\
+                <option value="Java">Java</option>\
+                <option value="JavaScript">JavaScript</option>\
+                <option value="Python">Python</option>\
+                <option value="TypeScript">TypeScript</option>\
+                <option value="Ruby">Ruby</option>\
+                <option value="Groovy">Groovy</option>\
+            </select>\
         </div>\
         <button type="button" class="btn btn-primary" id="cadastrar" onclick="CadastrarCandidato()">Cadastrar</button>\
     </form>';
 }
+
 
 //Função Cadastrar 
 function CadastrarCandidato() {
@@ -152,7 +174,15 @@ function CadastrarCandidato() {
     const estadoInput = document.getElementById('estado') as HTMLInputElement;
     const cepInput = document.getElementById('cep') as HTMLInputElement;
     const descricaoInput = document.getElementById('descricao') as HTMLInputElement;
-    const competenciasInput = document.getElementById('competencias') as HTMLInputElement;
+    const competenciasSelect = document.getElementById('competencias') as HTMLSelectElement;
+
+    const competenciasSelecionadas: string[] = [];
+    for (let i = 0; i < competenciasSelect.options.length; i++) {
+        const option = competenciasSelect.options[i];
+        if (option.selected) {
+            competenciasSelecionadas.push(option.value);
+        }
+    }
 
     const candidato = new Candidato(
         nomeInput.value,
@@ -162,7 +192,7 @@ function CadastrarCandidato() {
         estadoInput.value,
         parseInt(cepInput.value),
         descricaoInput.value,
-        competenciasInput.value
+        competenciasSelecionadas
     );
    
     ListaCandidatos.push(candidato);
@@ -176,7 +206,7 @@ function CadastrarCandidato() {
     estadoInput.value = '';
     cepInput.value = '';
     descricaoInput.value = '';
-    competenciasInput.value = '';
+    competenciasSelect.selectedIndex = -1; 
     
     // Exibir botões novamente
     formCandidato.style.display = 'none'
@@ -217,13 +247,17 @@ class Empresa {
                 <table class="mt-5 ms-5">
                     <tr>
                         <th><span> Nome: </span></th>
+                        <td><span>${'Empresa ' + [i + 1]}</span></td>
+                    </tr>
+                    <tr style="display:none;">
+                        <th><span> Nome: </span></th>
                         <td><span>${listaEmpresas[i].nome}</span></td>
                     </tr>
-                    <tr>
+                    <tr style="display:none;">
                         <th><span> Email Cooperativo:  </span></th>
                         <td><span>${listaEmpresas[i].emailCorporativo}</span></td>
                     </tr>
-                    <tr>
+                    <tr style="display:none;">
                         <th><span> CNPJ ou CPF: </span></th>
                         <td><span>${listaEmpresas[i].cnpj}</span></td>
                     </tr>

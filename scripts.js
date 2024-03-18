@@ -15,8 +15,11 @@ var Candidato = /** @class */ (function () {
     Candidato.listarCandidatos = function (listaCandidatos) {
         document.getElementById('listagemCandidato').innerHTML = '';
         var html = '';
-        for (var i = 0; i < listaCandidatos.length; i++) { // Mudança aqui
-            html += "\n            <table class=\"mt-5 ms-5\">\n                <tr>\n                    <th><span> Nome: </span></th>\n                    <td><span>" + listaCandidatos[i].nome + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Email: </span></th>\n                    <td><span>" + listaCandidatos[i].email + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> CPF: </span></th>\n                    <td><span>" + listaCandidatos[i].cpf + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Idade: </span></th>\n                    <td><span>" + listaCandidatos[i].idade + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Estado: </span></th>\n                    <td><span>" + listaCandidatos[i].estado + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> CEP: </span></th>\n                    <td><span>" + listaCandidatos[i].cep + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Descri\u00E7\u00E3o: </span></th>\n                    <td><span>" + listaCandidatos[i].descricao + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Compet\u00EAncias: </span></th>\n                    <td><span>" + listaCandidatos[i].competencias + "</span></td>\n                </tr>                                \n            </table>\n                 ";
+        for (var j = 0; j < listaCandidatos.length; j++) {
+            var competencias = ListaCandidatos[j].competencias.map(function (competencia) {
+                return "<li>" + competencia + "</li>";
+            }).join('');
+            html += "\n            <table class=\"mt-5 ms-5\">\n                <tr>\n                    <th><span> Nome: </span></th>\n                    <td><span>" + ('Candidato ' + [j + 1]) + "</span></td>\n                </tr>\n                <tr style=\"display:none;\">\n                    <th><span> Nome: </span></th>\n                    <td><span>" + listaCandidatos[j].nome + "</span></td>\n                </tr>\n                <tr style=\"display:none;\">\n                    <th><span> Email: </span></th>\n                    <td><span>" + listaCandidatos[j].email + "</span></td>\n                </tr>\n                <tr style=\"display:none;\">\n                    <th><span> CPF: </span></th>\n                    <td><span>" + listaCandidatos[j].cpf + "</span></td>\n                </tr>\n                <tr style=\"display:none;\">\n                    <th><span> Idade: </span></th>\n                    <td><span>" + listaCandidatos[j].idade + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Estado: </span></th>\n                    <td><span>" + listaCandidatos[j].estado + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> CEP: </span></th>\n                    <td><span>" + listaCandidatos[j].cep + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Descri\u00E7\u00E3o: </span></th>\n                    <td><span>" + listaCandidatos[j].descricao + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Compet\u00EAncias: </span></th>\n                    <td>\n                    <ul>\n                        " + competencias + "\n                    </ul>\n                    </td>\n                </tr>                         \n            </table>\n                ";
         }
         document.getElementById('listagemCandidato').innerHTML += html;
     };
@@ -92,7 +95,14 @@ function FormsCandidato() {
         </div>\
         <div class="mb-3 col-sm-6">\
             <label class="form-label">Competências</label>\
-            <input type="text" class="form-control" id="competencias">\
+            <select id="competencias" class="form-select" multiple>\
+                <option value="Java">Java</option>\
+                <option value="JavaScript">JavaScript</option>\
+                <option value="Python">Python</option>\
+                <option value="TypeScript">TypeScript</option>\
+                <option value="Ruby">Ruby</option>\
+                <option value="Groovy">Groovy</option>\
+            </select>\
         </div>\
         <button type="button" class="btn btn-primary" id="cadastrar" onclick="CadastrarCandidato()">Cadastrar</button>\
     </form>';
@@ -106,8 +116,15 @@ function CadastrarCandidato() {
     var estadoInput = document.getElementById('estado');
     var cepInput = document.getElementById('cep');
     var descricaoInput = document.getElementById('descricao');
-    var competenciasInput = document.getElementById('competencias');
-    var candidato = new Candidato(nomeInput.value, emailInput.value, parseInt(cpfInput.value), parseInt(idadeInput.value), estadoInput.value, parseInt(cepInput.value), descricaoInput.value, competenciasInput.value);
+    var competenciasSelect = document.getElementById('competencias');
+    var competenciasSelecionadas = [];
+    for (var i = 0; i < competenciasSelect.options.length; i++) {
+        var option = competenciasSelect.options[i];
+        if (option.selected) {
+            competenciasSelecionadas.push(option.value);
+        }
+    }
+    var candidato = new Candidato(nomeInput.value, emailInput.value, parseInt(cpfInput.value), parseInt(idadeInput.value), estadoInput.value, parseInt(cepInput.value), descricaoInput.value, competenciasSelecionadas);
     ListaCandidatos.push(candidato);
     alert('Candidato Cadastrado com Sucesso!');
     // Limpar campos do formulário
@@ -118,7 +135,7 @@ function CadastrarCandidato() {
     estadoInput.value = '';
     cepInput.value = '';
     descricaoInput.value = '';
-    competenciasInput.value = '';
+    competenciasSelect.selectedIndex = -1;
     // Exibir botões novamente
     formCandidato.style.display = 'none';
     btnEmpresa.style.display = '';
@@ -147,7 +164,7 @@ var Empresa = /** @class */ (function () {
         document.getElementById('listagemEmpresa').innerHTML = '';
         var html = '';
         for (var i = 0; i < listaEmpresas.length; i++) {
-            html += "\n                <table class=\"mt-5 ms-5\">\n                    <tr>\n                        <th><span> Nome: </span></th>\n                        <td><span>" + listaEmpresas[i].nome + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> Email Cooperativo:  </span></th>\n                        <td><span>" + listaEmpresas[i].emailCorporativo + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> CNPJ ou CPF: </span></th>\n                        <td><span>" + listaEmpresas[i].cnpj + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> Pa\u00EDs: </span></th>\n                        <td><span>" + listaEmpresas[i].pais + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> Estado: </span></th>\n                        <td><span>" + listaEmpresas[i].estado + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> CEP: </span></th>\n                        <td><span>" + listaEmpresas[i].cep + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> Descri\u00E7\u00E3o: </span></th>\n                        <td><span>" + listaEmpresas[i].descricao + "</span></td>\n                    </tr>                             \n                </table>\n            ";
+            html += "\n                <table class=\"mt-5 ms-5\">\n                    <tr>\n                        <th><span> Nome: </span></th>\n                        <td><span>" + ('Empresa ' + [i + 1]) + "</span></td>\n                    </tr>\n                    <tr style=\"display:none;\">\n                        <th><span> Nome: </span></th>\n                        <td><span>" + listaEmpresas[i].nome + "</span></td>\n                    </tr>\n                    <tr style=\"display:none;\">\n                        <th><span> Email Cooperativo:  </span></th>\n                        <td><span>" + listaEmpresas[i].emailCorporativo + "</span></td>\n                    </tr>\n                    <tr style=\"display:none;\">\n                        <th><span> CNPJ ou CPF: </span></th>\n                        <td><span>" + listaEmpresas[i].cnpj + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> Pa\u00EDs: </span></th>\n                        <td><span>" + listaEmpresas[i].pais + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> Estado: </span></th>\n                        <td><span>" + listaEmpresas[i].estado + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> CEP: </span></th>\n                        <td><span>" + listaEmpresas[i].cep + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> Descri\u00E7\u00E3o: </span></th>\n                        <td><span>" + listaEmpresas[i].descricao + "</span></td>\n                    </tr>                             \n                </table>\n            ";
         }
         document.getElementById('listagemEmpresa').innerHTML += html;
     };
