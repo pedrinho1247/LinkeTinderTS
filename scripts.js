@@ -1,8 +1,8 @@
 "use strict";
 var ListaCandidatos = [];
 var ListaEmpresas = [];
-var Candidato = /** @class */ (function () {
-    function Candidato(nome, email, cpf, idade, estado, cep, descricao, competencias) {
+class Candidato {
+    constructor(nome, email, cpf, idade, estado, cep, descricao, competencias) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
@@ -12,19 +12,59 @@ var Candidato = /** @class */ (function () {
         this.descricao = descricao;
         this.competencias = competencias;
     }
-    Candidato.listarCandidatos = function (listaCandidatos) {
+    static listarCandidatos(listaCandidatos) {
         document.getElementById('listagemCandidato').innerHTML = '';
         var html = '';
         for (var j = 0; j < listaCandidatos.length; j++) {
-            var competencias = ListaCandidatos[j].competencias.map(function (competencia) {
-                return "<li>" + competencia + "</li>";
-            }).join('');
-            html += "\n            <table class=\"mt-5 ms-5\">\n                <tr>\n                    <th><span> Nome: </span></th>\n                    <td><span>" + ('Candidato ' + [j + 1]) + "</span></td>\n                </tr>\n                <tr style=\"display:none;\">\n                    <th><span> Nome: </span></th>\n                    <td><span>" + listaCandidatos[j].nome + "</span></td>\n                </tr>\n                <tr style=\"display:none;\">\n                    <th><span> Email: </span></th>\n                    <td><span>" + listaCandidatos[j].email + "</span></td>\n                </tr>\n                <tr style=\"display:none;\">\n                    <th><span> CPF: </span></th>\n                    <td><span>" + listaCandidatos[j].cpf + "</span></td>\n                </tr>\n                <tr style=\"display:none;\">\n                    <th><span> Idade: </span></th>\n                    <td><span>" + listaCandidatos[j].idade + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Estado: </span></th>\n                    <td><span>" + listaCandidatos[j].estado + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> CEP: </span></th>\n                    <td><span>" + listaCandidatos[j].cep + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Descri\u00E7\u00E3o: </span></th>\n                    <td><span>" + listaCandidatos[j].descricao + "</span></td>\n                </tr>\n                <tr>\n                    <th><span> Compet\u00EAncias: </span></th>\n                    <td>\n                    <ul>\n                        " + competencias + "\n                    </ul>\n                    </td>\n                </tr>                         \n            </table>\n                ";
+            const competencias = ListaCandidatos[j].competencias.map(competencia => `<li>${competencia}</li>`).join('');
+            html += `
+            <table class="mt-5 ms-5">
+                <tr>
+                    <th><span> Nome: </span></th>
+                    <td><span>${'Candidato ' + [j + 1]}</span></td>
+                </tr>
+                <tr style="display:none;">
+                    <th><span> Nome: </span></th>
+                    <td><span>${listaCandidatos[j].nome}</span></td>
+                </tr>
+                <tr style="display:none;">
+                    <th><span> Email: </span></th>
+                    <td><span>${listaCandidatos[j].email}</span></td>
+                </tr>
+                <tr style="display:none;">
+                    <th><span> CPF: </span></th>
+                    <td><span>${listaCandidatos[j].cpf}</span></td>
+                </tr>
+                <tr style="display:none;">
+                    <th><span> Idade: </span></th>
+                    <td><span>${listaCandidatos[j].idade}</span></td>
+                </tr>
+                <tr>
+                    <th><span> Estado: </span></th>
+                    <td><span>${listaCandidatos[j].estado}</span></td>
+                </tr>
+                <tr>
+                    <th><span> CEP: </span></th>
+                    <td><span>${listaCandidatos[j].cep}</span></td>
+                </tr>
+                <tr>
+                    <th><span> Descrição: </span></th>
+                    <td><span>${listaCandidatos[j].descricao}</span></td>
+                </tr>
+                <tr>
+                    <th><span> Competências: </span></th>
+                    <td>
+                    <ul>
+                        ${competencias}
+                    </ul>
+                    </td>
+                </tr>                         
+            </table>
+                `;
         }
         document.getElementById('listagemCandidato').innerHTML += html;
-    };
-    return Candidato;
-}());
+    }
+}
 //Botão
 var btnEmpresa = document.getElementById('empresa');
 var btnVgCandidato = document.getElementById('vgcandidatos');
@@ -109,22 +149,22 @@ function FormsCandidato() {
 }
 //Função Cadastrar 
 function CadastrarCandidato() {
-    var nomeInput = document.getElementById('nome');
-    var emailInput = document.getElementById('email');
-    var cpfInput = document.getElementById('cpf');
-    var idadeInput = document.getElementById('idade');
-    var estadoInput = document.getElementById('estado');
-    var cepInput = document.getElementById('cep');
-    var descricaoInput = document.getElementById('descricao');
-    var competenciasSelect = document.getElementById('competencias');
-    var competenciasSelecionadas = [];
-    for (var i = 0; i < competenciasSelect.options.length; i++) {
-        var option = competenciasSelect.options[i];
+    const nomeInput = document.getElementById('nome');
+    const emailInput = document.getElementById('email');
+    const cpfInput = document.getElementById('cpf');
+    const idadeInput = document.getElementById('idade');
+    const estadoInput = document.getElementById('estado');
+    const cepInput = document.getElementById('cep');
+    const descricaoInput = document.getElementById('descricao');
+    const competenciasSelect = document.getElementById('competencias');
+    const competenciasSelecionadas = [];
+    for (let i = 0; i < competenciasSelect.options.length; i++) {
+        const option = competenciasSelect.options[i];
         if (option.selected) {
             competenciasSelecionadas.push(option.value);
         }
     }
-    var candidato = new Candidato(nomeInput.value, emailInput.value, parseInt(cpfInput.value), parseInt(idadeInput.value), estadoInput.value, parseInt(cepInput.value), descricaoInput.value, competenciasSelecionadas);
+    const candidato = new Candidato(nomeInput.value, emailInput.value, parseInt(cpfInput.value), parseInt(idadeInput.value), estadoInput.value, parseInt(cepInput.value), descricaoInput.value, competenciasSelecionadas);
     ListaCandidatos.push(candidato);
     alert('Candidato Cadastrado com Sucesso!');
     // Limpar campos do formulário
@@ -150,8 +190,8 @@ btnVgCandidato.onclick = function () {
     listCa.style.display = 'initial';
     Candidato.listarCandidatos(ListaCandidatos);
 };
-var Empresa = /** @class */ (function () {
-    function Empresa(nome, emailCorporativo, cnpj, pais, estado, cep, descricao) {
+class Empresa {
+    constructor(nome, emailCorporativo, cnpj, pais, estado, cep, descricao) {
         this.nome = nome;
         this.emailCorporativo = emailCorporativo;
         this.cnpj = cnpj;
@@ -160,30 +200,95 @@ var Empresa = /** @class */ (function () {
         this.cep = cep;
         this.descricao = descricao;
     }
-    Empresa.listarEmpresas = function (listaEmpresas) {
+    static listarEmpresas(listaEmpresas) {
         document.getElementById('listagemEmpresa').innerHTML = '';
         var html = '';
         for (var i = 0; i < listaEmpresas.length; i++) {
-            html += "\n                <table class=\"mt-5 ms-5\">\n                    <tr>\n                        <th><span> Nome: </span></th>\n                        <td><span>" + ('Empresa ' + [i + 1]) + "</span></td>\n                    </tr>\n                    <tr style=\"display:none;\">\n                        <th><span> Nome: </span></th>\n                        <td><span>" + listaEmpresas[i].nome + "</span></td>\n                    </tr>\n                    <tr style=\"display:none;\">\n                        <th><span> Email Cooperativo:  </span></th>\n                        <td><span>" + listaEmpresas[i].emailCorporativo + "</span></td>\n                    </tr>\n                    <tr style=\"display:none;\">\n                        <th><span> CNPJ ou CPF: </span></th>\n                        <td><span>" + listaEmpresas[i].cnpj + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> Pa\u00EDs: </span></th>\n                        <td><span>" + listaEmpresas[i].pais + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> Estado: </span></th>\n                        <td><span>" + listaEmpresas[i].estado + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> CEP: </span></th>\n                        <td><span>" + listaEmpresas[i].cep + "</span></td>\n                    </tr>\n                    <tr>\n                        <th><span> Descri\u00E7\u00E3o: </span></th>\n                        <td><span>" + listaEmpresas[i].descricao + "</span></td>\n                    </tr>                             \n                </table>\n            ";
+            html += `
+                <table class="mt-5 ms-5">
+                    <tr>
+                        <th><span> Nome: </span></th>
+                        <td><span>${'Empresa ' + [i + 1]}</span></td>
+                    </tr>
+                    <tr style="display:none;">
+                        <th><span> Nome: </span></th>
+                        <td><span>${listaEmpresas[i].nome}</span></td>
+                    </tr>
+                    <tr style="display:none;">
+                        <th><span> Email Cooperativo:  </span></th>
+                        <td><span>${listaEmpresas[i].emailCorporativo}</span></td>
+                    </tr>
+                    <tr style="display:none;">
+                        <th><span> CNPJ ou CPF: </span></th>
+                        <td><span>${listaEmpresas[i].cnpj}</span></td>
+                    </tr>
+                    <tr>
+                        <th><span> País: </span></th>
+                        <td><span>${listaEmpresas[i].pais}</span></td>
+                    </tr>
+                    <tr>
+                        <th><span> Estado: </span></th>
+                        <td><span>${listaEmpresas[i].estado}</span></td>
+                    </tr>
+                    <tr>
+                        <th><span> CEP: </span></th>
+                        <td><span>${listaEmpresas[i].cep}</span></td>
+                    </tr>
+                    <tr>
+                        <th><span> Descrição: </span></th>
+                        <td><span>${listaEmpresas[i].descricao}</span></td>
+                    </tr>                             
+                </table>
+            `;
         }
         document.getElementById('listagemEmpresa').innerHTML += html;
-    };
-    return Empresa;
-}());
+    }
+}
 // Formulário Empresa
 function FormsEmpresa() {
-    formEmpresa.innerHTML = "\n    <form class=\"ms-4 me-4\">\n        <div class=\"mb-3 col-sm-6\">\n            <label class=\"form-label\">Nome</label>\n            <input type=\"text\" class=\"form-control\" id=\"nomeE\">\n        </div>\n        <div class=\"mb-3 col-sm-6\">\n            <label class=\"form-label\">Email Corporativo</label>\n            <input type=\"email\" class=\"form-control\" id=\"emailCorporativo\">\n        </div>\n        <div class=\"mb-3 col-sm-6\">\n            <label class=\"form-label\">CNPJ ou CPF</label>\n            <input type=\"number\" class=\"form-control\" id=\"cnpj\">\n        </div>\n        <div class=\"mb-3 col-sm-6\">\n            <label class=\"form-label\">Pa\u00EDs</label>\n            <input type=\"text\" class=\"form-control\" id=\"paisE\">\n        </div>\n        <div class=\"mb-3 col-sm-6\">\n            <label class=\"form-label\">Estado</label>\n            <input type=\"text\" class=\"form-control\" id=\"estadoE\">\n        </div>\n        <div class=\"mb-3 col-sm-6\">\n            <label class=\"form-label\">CEP</label>\n            <input type=\"number\" class=\"form-control\" id=\"cepE\">\n        </div>\n        <div class=\"mb-3 col-sm-6\">\n            <label class=\"form-label\">Descri\u00E7\u00E3o</label>\n            <input type=\"text\" class=\"form-control\" id=\"descricaoE\">\n        </div>\n        <button type=\"button\" class=\"btn btn-primary\" id=\"cadastrarE\" onclick=\"CadastrarEmpresa()\">Cadastrar</button>\n    </form>";
+    formEmpresa.innerHTML = `
+    <form class="ms-4 me-4">
+        <div class="mb-3 col-sm-6">
+            <label class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nomeE">
+        </div>
+        <div class="mb-3 col-sm-6">
+            <label class="form-label">Email Corporativo</label>
+            <input type="email" class="form-control" id="emailCorporativo">
+        </div>
+        <div class="mb-3 col-sm-6">
+            <label class="form-label">CNPJ ou CPF</label>
+            <input type="number" class="form-control" id="cnpj">
+        </div>
+        <div class="mb-3 col-sm-6">
+            <label class="form-label">País</label>
+            <input type="text" class="form-control" id="paisE">
+        </div>
+        <div class="mb-3 col-sm-6">
+            <label class="form-label">Estado</label>
+            <input type="text" class="form-control" id="estadoE">
+        </div>
+        <div class="mb-3 col-sm-6">
+            <label class="form-label">CEP</label>
+            <input type="number" class="form-control" id="cepE">
+        </div>
+        <div class="mb-3 col-sm-6">
+            <label class="form-label">Descrição</label>
+            <input type="text" class="form-control" id="descricaoE">
+        </div>
+        <button type="button" class="btn btn-primary" id="cadastrarE" onclick="CadastrarEmpresa()">Cadastrar</button>
+    </form>`;
 }
 // Função Cadastrar Empresa
 function CadastrarEmpresa() {
-    var nomeInput = document.getElementById('nomeE');
-    var emailInput = document.getElementById('emailCorporativo');
-    var cnpjInput = document.getElementById('cnpj');
-    var paisInput = document.getElementById('paisE');
-    var estadoInput = document.getElementById('estadoE');
-    var cepInput = document.getElementById('cepE');
-    var descricaoInput = document.getElementById('descricaoE');
-    var empresa = new Empresa(nomeInput.value, emailInput.value, parseInt(cnpjInput.value), paisInput.value, estadoInput.value, parseInt(cepInput.value), descricaoInput.value);
+    const nomeInput = document.getElementById('nomeE');
+    const emailInput = document.getElementById('emailCorporativo');
+    const cnpjInput = document.getElementById('cnpj');
+    const paisInput = document.getElementById('paisE');
+    const estadoInput = document.getElementById('estadoE');
+    const cepInput = document.getElementById('cepE');
+    const descricaoInput = document.getElementById('descricaoE');
+    const empresa = new Empresa(nomeInput.value, emailInput.value, parseInt(cnpjInput.value), paisInput.value, estadoInput.value, parseInt(cepInput.value), descricaoInput.value);
     ListaEmpresas.push(empresa);
     alert('Empresa Cadastrada com Sucesso!');
     // Limpar campos do formulário
