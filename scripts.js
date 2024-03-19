@@ -167,9 +167,49 @@ function CadastrarCandidato() {
             competenciasSelecionadas.push(option.value);
         }
     }
-    const candidato = new Candidato(nomeInput.value, emailInput.value, parseInt(cpfInput.value), parseInt(idadeInput.value), estadoInput.value, parseInt(cepInput.value), descricaoInput.value, competenciasSelecionadas);
-    ListaCandidatos.push(candidato);
-    alert('Candidato Cadastrado com Sucesso!');
+    const regexNome = /[a-zA-Z\u00C0-\u00FF ]+/g;
+    const regexeEmail = /[\w.]+@\w+\.\w{2,4}(\.\w{2})?/g;
+    const regexCPF = /\d{3}\.\d{3}\.\d{3}-?\d{2}/g;
+    const regexIdade = /\d{2}/g;
+    const regexEstado = /[a-zA-Z\u00C0-\u00FF ]+/g;
+    const regexCEP = /\d{5}(-|.)?\d{3}/g;
+    const regexDescricao = /[a-zA-Z\u00C0-\u00FF ]+/g;
+    let nome;
+    let email;
+    let cpf;
+    let idade;
+    let estado;
+    let cep;
+    let descricao;
+    // Switch para validar cada campo
+    switch (true) {
+        case !regexNome.test(nomeInput.value):
+            alert("Erro: Nome inválido");
+            break;
+        case !regexeEmail.test(emailInput.value):
+            alert("Erro: E-mail inválido");
+            break;
+        case !regexCPF.test(cpfInput.value):
+            alert("Erro: CPF inválido");
+            break;
+        case !regexIdade.test(idadeInput.value):
+            alert("Erro: Idade inválida");
+            break;
+        case !regexEstado.test(estadoInput.value):
+            alert("Erro: Estado inválido");
+            break;
+        case !regexCEP.test(cepInput.value):
+            alert("Erro: CEP inválido");
+            break;
+        case !regexDescricao.test(descricaoInput.value):
+            alert("Erro: Descrição inválida");
+            break;
+    }
+    if (nome && email && cpf && idade && estado && cep && descricao) {
+        const candidato = new Candidato(nome, email, cpf, idade, estado, cep, descricao, competenciasSelecionadas);
+        ListaCandidatos.push(candidato);
+        alert('Candidato Cadastrado com Sucesso!');
+    }
     // Limpar campos do formulário
     nomeInput.value = '';
     emailInput.value = '';
@@ -293,9 +333,49 @@ function CadastrarEmpresa() {
     const estadoInput = document.getElementById('estadoE');
     const cepInput = document.getElementById('cepE');
     const descricaoInput = document.getElementById('descricaoE');
-    const empresa = new Empresa(nomeInput.value, emailInput.value, parseInt(cnpjInput.value), paisInput.value, estadoInput.value, parseInt(cepInput.value), descricaoInput.value);
-    ListaEmpresas.push(empresa);
-    alert('Empresa Cadastrada com Sucesso!');
+    const regexNomeE = /[a-zA-Z\u00C0-\u00FF ]+/g;
+    const regexeEmailCoorp = /[\w.]+@\w+\.\w{2,4}(\.\w{2})?/g;
+    const regexCNPJ = /(\d{3}\.\d{3}\.\d{3}-\d{2})|(\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2})/;
+    const regexPaisE = /[a-zA-Z\u00C0-\u00FF ]+/g;
+    const regexEstadoE = /[a-zA-Z\u00C0-\u00FF ]+/g;
+    const regexCEPE = /\d{5}(-|.)?\d{3}/g;
+    const regexDescricaoE = /[a-zA-Z\u00C0-\u00FF ]+/g;
+    let nomeE;
+    let emailE;
+    let cnpj;
+    let paisE;
+    let estadoE;
+    let cepE;
+    let descricaoE;
+    // Switch para validar cada campo
+    switch (true) {
+        case !regexNomeE.test(nomeInput.value):
+            alert("Erro: Nome inválido");
+            break;
+        case !regexeEmailCoorp.test(emailInput.value):
+            alert("Erro: E-mail inválido");
+            break;
+        case !regexCNPJ.test(cnpjInput.value):
+            alert("Erro: CPF inválido");
+            break;
+        case !regexPaisE.test(paisInput.value):
+            alert("Erro: Pais inválido");
+            break;
+        case !regexEstadoE.test(estadoInput.value):
+            alert("Erro: Estado inválido");
+            break;
+        case !regexCEPE.test(cepInput.value):
+            alert("Erro: CEP inválido");
+            break;
+        case !regexDescricaoE.test(descricaoInput.value):
+            alert("Erro: Descrição inválida");
+            break;
+    }
+    if (nomeE && emailE && cnpj && paisE && estadoE && cepE && descricaoE) {
+        const empresa = new Empresa(nomeE, emailE, cnpj, paisE, estadoE, cepE, descricaoE);
+        ListaEmpresas.push(empresa);
+        alert('Empresa Cadastrado com Sucesso!');
+    }
     // Limpar campos do formulário
     nomeInput.value = '';
     emailInput.value = '';
