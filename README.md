@@ -1,7 +1,8 @@
 
-# Linketinder
+# Linketinder FrontEnd
 
 Esse projeto tem como base um desafio do programa Acelera ZG. O desafio proposto é que utlizando a linguagem Typescript seja criar algumas funcionalidades do futuro aplicativo Linketinder. 
+Backend em desenvolvimento: https://github.com/pedrinho1247/Linketinder
 
 
 ## Funcionalidades
