@@ -74,6 +74,7 @@ var formCandidato = document.getElementById('formscandidato');
 var formEmpresa = document.getElementById('formsempresa');
 var listEmp = document.getElementById('listagemEmpresa');
 var listCa = document.getElementById('listagemCandidato');
+var grafico = document.getElementById('myChart');
 //Esconder botões
 window.onload = function () {
     btnCandidato.onclick = function () {
@@ -85,6 +86,7 @@ window.onload = function () {
         btnVgEmpresa.style.display = 'none';
         listCa.style.display = 'none';
         listEmp.style.display = 'none';
+        grafico.style.display = 'none';
         FormsCandidato();
     };
     //Botão para mostrar formulário de cadastro de empresas
@@ -98,6 +100,7 @@ window.onload = function () {
         btnVgEmpresa.style.display = 'none';
         listCa.style.display = 'none';
         listEmp.style.display = 'none';
+        grafico.style.display = 'none';
         FormsEmpresa();
     };
 };
@@ -186,8 +189,10 @@ function CadastrarCandidato() {
 }
 //Listar
 btnVgCandidato.onclick = function () {
+    updateChart();
     listEmp.style.display = 'none';
     listCa.style.display = 'initial';
+    grafico.style.display = 'initial';
     Candidato.listarCandidatos(ListaCandidatos);
 };
 class Empresa {
@@ -309,7 +314,41 @@ function CadastrarEmpresa() {
 }
 // Listar Empresas
 btnVgEmpresa.onclick = function () {
+    grafico.style.display = 'none';
     listCa.style.display = 'none';
     listEmp.style.display = 'initial';
     Empresa.listarEmpresas(ListaEmpresas);
 };
+function updateChart() {
+    const labels = [];
+    const datasets = [];
+    ListaCandidatos.forEach((candidato, index) => {
+        const competenciasDoCandidato = candidato.competencias;
+        labels.push(`Candidato ${index + 1}`);
+        competenciasDoCandidato.forEach(competencia => {
+            const existingDatasetIndex = datasets.findIndex(dataset => 'label' in dataset && dataset.label === competencia);
+            if (existingDatasetIndex !== -1) {
+                datasets[existingDatasetIndex].data[index]++;
+            }
+            else {
+                const newData = Array(ListaCandidatos.length).fill(0);
+                newData[index] = 1;
+                datasets.push({
+                    label: competencia,
+                    backgroundColor: `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255},0.5)`,
+                    data: newData
+                });
+            }
+        });
+    });
+    const chartData = {
+        labels: labels,
+        datasets: datasets
+    };
+    const chartOptions = {};
+    const myChart = new Chart('myChart', {
+        type: 'bar',
+        data: chartData,
+        options: chartOptions
+    });
+}

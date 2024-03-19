@@ -19,3 +19,10 @@ style
     td:hover {
         background-color: #89aeff;
     }
+
+#chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+}
