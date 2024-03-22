@@ -198,8 +198,8 @@ function CadastrarCandidato() {
             alert("Erro: Descrição inválida");
             break;
     }
-    if (nomeInput.value && emailInput.value && cpfInput.value && idadeInput.value && estadoInput.value && Number(cepInput) && descricaoInput.value) {
-        const candidato = new Candidato(nomeInput.value, emailInput.value, Number(cpfInput.value), Number(idadeInput.value), estadoInput.value, Number(cepInput.value), descricaoInput.value, competenciasSelecionadas);
+    if (nomeInput.value && emailInput.value && cpfInput.value && idadeInput.value && estadoInput.value && cepInput.value && descricaoInput.value) {
+        const candidato = new Candidato(nomeInput.value, emailInput.value, cpfInput.value, Number(idadeInput.value), estadoInput.value, Number(cepInput.value), descricaoInput.value, competenciasSelecionadas);
         ListaCandidatos.push(candidato);
         alert('Candidato Cadastrado com Sucesso!');
     }
@@ -357,7 +357,7 @@ function CadastrarEmpresa() {
             alert("Erro: Descrição inválida");
             break;
     }
-    if (nomeInput.value && emailInput.value && cnpjInput.value && paisInput.value && estadoInput.value && Number(cepInput) && descricaoInput.value) {
+    if (nomeInput.value && emailInput.value && cnpjInput.value && paisInput.value && estadoInput.value && cepInput.value && descricaoInput.value) {
         const empresa = new Empresa(nomeInput.value, emailInput.value, cnpjInput.value, paisInput.value, estadoInput.value, Number(cepInput), descricaoInput.value);
         ListaEmpresas.push(empresa);
         alert('Empresa Cadastrado com Sucesso!');

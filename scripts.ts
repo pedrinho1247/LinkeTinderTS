@@ -4,7 +4,7 @@ var ListaEmpresas: Empresa[] = [];
 class Candidato{
     constructor(public  nome: string, 
         public email: string, 
-        public cpf: number,
+        public cpf: string,
         public idade: number,
         public estado: string,
         public cep: number,
@@ -220,11 +220,11 @@ function CadastrarCandidato() {
             break;
     }
 
-    if (nomeInput.value && emailInput.value && cpfInput.value &&  idadeInput.value && estadoInput.value && Number(cepInput) && descricaoInput.value) {
+    if (nomeInput.value && emailInput.value && cpfInput.value &&  idadeInput.value && estadoInput.value && cepInput.value && descricaoInput.value) {
         const candidato: Candidato = new Candidato(
             nomeInput.value,
             emailInput.value,
-            Number(cpfInput.value),
+            cpfInput.value,
             Number(idadeInput.value),
             estadoInput.value,
             Number(cepInput.value),
@@ -407,7 +407,7 @@ function CadastrarEmpresa() {
             break;
     }
     
-    if (nomeInput.value && emailInput.value && cnpjInput.value &&  paisInput.value && estadoInput.value && Number(cepInput) && descricaoInput.value) {
+    if (nomeInput.value && emailInput.value && cnpjInput.value &&  paisInput.value && estadoInput.value && cepInput.value && descricaoInput.value) {
         const empresa: Empresa = new Empresa(
             nomeInput.value,
             emailInput.value,
