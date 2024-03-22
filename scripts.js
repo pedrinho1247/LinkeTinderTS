@@ -174,13 +174,6 @@ function CadastrarCandidato() {
     const regexEstado = /[a-zA-Z\u00C0-\u00FF ]+/g;
     const regexCEP = /\d{5}(-|.)?\d{3}/g;
     const regexDescricao = /[a-zA-Z\u00C0-\u00FF ]+/g;
-    let nome;
-    let email;
-    let cpf;
-    let idade;
-    let estado;
-    let cep;
-    let descricao;
     // Switch para validar cada campo
     switch (true) {
         case !regexNome.test(nomeInput.value):
@@ -205,8 +198,8 @@ function CadastrarCandidato() {
             alert("Erro: Descrição inválida");
             break;
     }
-    if (nome && email && cpf && idade && estado && cep && descricao) {
-        const candidato = new Candidato(nome, email, cpf, idade, estado, cep, descricao, competenciasSelecionadas);
+    if (nomeInput.value && emailInput.value && cpfInput.value && idadeInput.value && estadoInput.value && Number(cepInput) && descricaoInput.value) {
+        const candidato = new Candidato(nomeInput.value, emailInput.value, Number(cpfInput.value), Number(idadeInput.value), estadoInput.value, Number(cepInput.value), descricaoInput.value, competenciasSelecionadas);
         ListaCandidatos.push(candidato);
         alert('Candidato Cadastrado com Sucesso!');
     }
@@ -303,7 +296,7 @@ function FormsEmpresa() {
         </div>
         <div class="mb-3 col-sm-6">
             <label class="form-label">CNPJ ou CPF</label>
-            <input type="number" class="form-control" id="cnpj">
+            <input type="text" class="form-control" id="cnpj">
         </div>
         <div class="mb-3 col-sm-6">
             <label class="form-label">País</label>
@@ -340,13 +333,6 @@ function CadastrarEmpresa() {
     const regexEstadoE = /[a-zA-Z\u00C0-\u00FF ]+/g;
     const regexCEPE = /\d{5}(-|.)?\d{3}/g;
     const regexDescricaoE = /[a-zA-Z\u00C0-\u00FF ]+/g;
-    let nomeE;
-    let emailE;
-    let cnpj;
-    let paisE;
-    let estadoE;
-    let cepE;
-    let descricaoE;
     // Switch para validar cada campo
     switch (true) {
         case !regexNomeE.test(nomeInput.value):
@@ -356,7 +342,7 @@ function CadastrarEmpresa() {
             alert("Erro: E-mail inválido");
             break;
         case !regexCNPJ.test(cnpjInput.value):
-            alert("Erro: CPF inválido");
+            alert("Erro: CPNJ inválido");
             break;
         case !regexPaisE.test(paisInput.value):
             alert("Erro: Pais inválido");
@@ -371,8 +357,8 @@ function CadastrarEmpresa() {
             alert("Erro: Descrição inválida");
             break;
     }
-    if (nomeE && emailE && cnpj && paisE && estadoE && cepE && descricaoE) {
-        const empresa = new Empresa(nomeE, emailE, cnpj, paisE, estadoE, cepE, descricaoE);
+    if (nomeInput.value && emailInput.value && cnpjInput.value && paisInput.value && estadoInput.value && Number(cepInput) && descricaoInput.value) {
+        const empresa = new Empresa(nomeInput.value, emailInput.value, cnpjInput.value, paisInput.value, estadoInput.value, Number(cepInput), descricaoInput.value);
         ListaEmpresas.push(empresa);
         alert('Empresa Cadastrado com Sucesso!');
     }
